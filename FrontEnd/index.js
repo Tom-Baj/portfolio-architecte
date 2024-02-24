@@ -1,27 +1,26 @@
-// Initialisation de deux tableaux vides pour stocker les projets et les catégories
+// Tableaux vides pour stocker les projets et les catégories
 let projets = [];
 let categories = [];
 
-// Fonction d'initialisation appelée au chargement de la page/script
+// Fonction d'initialisation
 function init() {
-  getWorks(); // Appelle la fonction pour récupérer les travaux/projets
-  getCategories(); // Appelle la fonction pour récupérer les catégories
+  getWorks();
+  getCategories();
 }
 
-// Fonction pour récupérer les travaux/projets depuis une API
+// Fonction pour récupérer les travaux/projets depuis l'API
 function getWorks() {
-  fetch("http://localhost:5678/api/works") // Requête HTTP GET à l'API
+  fetch("http://localhost:5678/api/works")
     .then((response) => {
-      // Traitement de la réponse
       if (!response.ok) {
-        // Si le statut de la réponse n'est pas OK, lève une erreur
         throw new Error(`Erreur HTTP! Statut: ${response.status}`);
       }
-      return response.json(); // Transforme la réponse en JSON
+      return response.json();
     })
     .then((response) => {
-      projets = response; // Stocke les projets récupérés dans le tableau projets
-      afficherWorks(); // Appelle la fonction pour afficher les projets
+      projets = response;
+      console.log(projets);
+      afficherWorks();
     })
     .catch((error) => {
       // Gère les erreurs éventuelles
@@ -32,23 +31,22 @@ function getWorks() {
     });
 }
 
-// Fonction pour récupérer les catégories depuis une API
+// Fonction pour récupérer les catégories depuis l'API
 function getCategories() {
-  fetch("http://localhost:5678/api/categories") // Requête HTTP GET à l'API
+  fetch("http://localhost:5678/api/categories")
     .then((response) => {
-      // Traitement de la réponse
       if (!response.ok) {
-        // Si le statut de la réponse n'est pas OK, lève une erreur
         throw new Error(`Erreur HTTP! Statut: ${response.status}`);
       }
-      return response.json(); // Transforme la réponse en JSON
+      return response.json();
     })
     .then((response) => {
-      categories = response; // Stocke les catégories récupérées dans le tableau categories
-      afficherCategories(); // Appelle la fonction pour afficher les catégories
+      categories = response;
+      console.log(categories);
+      afficherCategories();
     })
     .catch((error) => {
-      // Gère les erreurs éventuelles
+      // Gèrer les erreurs éventuelles
       console.error(
         "Une erreur s'est produite lors de la récupération des catégories :",
         error
@@ -58,7 +56,7 @@ function getCategories() {
 
 // Fonction pour afficher les projets
 function afficherWorks() {
-  const gallery = document.querySelector(".gallery"); // Sélectionne l'élément du DOM où afficher les projets
+  const gallery = document.querySelector(".gallery");
 
   for (let i = 0; i < projets.length; i++) {
     // Boucle sur le tableau de projets
@@ -68,42 +66,89 @@ function afficherWorks() {
     figureElement.dataset.userId = projets[i].userId;
 
     const imgElement = document.createElement("img");
-    imgElement.src = projets[i].imageUrl; // Définit l'URL de l'image du projet
+    imgElement.src = projets[i].imageUrl;
 
     const figcaptionElement = document.createElement("figcaption");
-    figcaptionElement.innerText = projets[i].title; // Définit le titre du projet
+    figcaptionElement.innerText = projets[i].title;
 
-    gallery.appendChild(figureElement); // Ajoute l'élément figure à la galerie
-    figureElement.appendChild(imgElement); // Ajoute l'image au figure
-    figureElement.appendChild(figcaptionElement); // Ajoute la légende au figure
+    gallery.appendChild(figureElement);
+    figureElement.appendChild(imgElement);
+    figureElement.appendChild(figcaptionElement);
   }
 }
 
 // Fonction pour afficher les catégories
 function afficherCategories() {
-  boutonTous(); // Crée et ajoute le bouton "Tous" pour afficher tous les projets
-  for (let i = 0; i < categories.length; i++) {
-    // Boucle sur le tableau de catégories
-    const categorieElement = categories[i];
+  // Crée et ajoute le bouton "Tous" pour afficher tous les projets
+  boutonTous();
+  const categoriesEmplacement = document.querySelector(".bouton-container");
 
-    const categoriesEmplacement = document.querySelector(".bouton-container");
-
+  categories.forEach((categorieElement) => {
     const categorieBouton = document.createElement("button");
     categorieBouton.classList.add("btn");
-    categorieBouton.dataset.id = categorieElement.id;
-    categorieBouton.innerText = categorieElement.name; // Définit le nom de la catégorie sur le bouton
+    categorieBouton.innerText = categorieElement.name;
+    categorieBouton.id = "categorie-" + categorieElement.id;
 
-    categoriesEmplacement.appendChild(categorieBouton); // Ajoute le bouton de catégorie à l'emplacement des boutons
-  }
+    // Attache un écouteur d'événements à chaque bouton
+    categorieBouton.addEventListener("click", () =>
+      afficherProjetsDeLaCategorie(categorieElement.id)
+    );
+
+    categoriesEmplacement.appendChild(categorieBouton);
+  });
 }
 
 // Fonction pour créer et ajouter le bouton "Tous"
 function boutonTous() {
+  // Création du bouton "Tous"
   const boutonTous = document.createElement("button");
   boutonTous.classList.add("btn", "btn-tous");
   boutonTous.innerText = "Tous";
   const categoriesEmplacement = document.querySelector(".bouton-container");
+
+  // Ajout ecouteur d'événement click sur le bouton "Tous"
+  boutonTous.addEventListener("click", afficherTousLesProjets);
+
+  // Ajout du bouton "Tous"
   categoriesEmplacement.appendChild(boutonTous);
+}
+
+function afficherTousLesProjets() {
+  // Réinitialise le DOM
+  document.querySelector(".gallery").innerHTML = "";
+  afficherWorks();
+}
+
+function afficherProjetsDeLaCategorie(categoryId) {
+  // Filtrer les projets par categoryId.
+  const projetsFiltres = projets.filter(
+    (projet) => projet.categoryId.toString() === categoryId.toString()
+  );
+
+  // Sélectionne l'élément du DOM où afficher les projets et nettoie le contenu précédent
+  const gallery = document.querySelector(".gallery");
+  // Nettoie la galerie
+  gallery.innerHTML = "";
+
+  // Boucle sur le tableau de projets filtrés pour créer et ajouter les éléments au DOM
+  projetsFiltres.forEach((projet) => {
+    const figureElement = document.createElement("figure");
+    figureElement.dataset.id = projet.id;
+    figureElement.dataset.categoryId = projet.categoryId;
+    figureElement.dataset.userId = projet.userId;
+
+    const imgElement = document.createElement("img");
+    imgElement.src = projet.imageUrl;
+    imgElement.alt = projet.title;
+
+    const figcaptionElement = document.createElement("figcaption");
+    // Définit le titre du projet
+    figcaptionElement.innerText = projet.title;
+    // Assemble les éléments et les ajoute à la galerie
+    figureElement.appendChild(imgElement);
+    figureElement.appendChild(figcaptionElement);
+    gallery.appendChild(figureElement);
+  });
 }
 
 init();
