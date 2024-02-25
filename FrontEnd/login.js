@@ -32,7 +32,7 @@ function userLogin() {
         window.location.href = "index.html";
       })
       .catch((error) => {
-        console.error("Erreur lors de la connexion", error);
+        alert("Erreur ! E-mail ou mot de passe incorrect");
       });
   });
 }
