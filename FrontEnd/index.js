@@ -19,7 +19,6 @@ function getWorks() {
     })
     .then((response) => {
       projets = response;
-      console.log(projets);
       afficherWorks();
     })
     .catch((error) => {
@@ -42,7 +41,6 @@ function getCategories() {
     })
     .then((response) => {
       categories = response;
-      console.log(categories);
       afficherCategories();
     })
     .catch((error) => {
