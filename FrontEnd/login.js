@@ -28,11 +28,13 @@ function userLogin() {
       })
       .then((response) => {
         console.log("Utilisateur connecté");
-        window.localStorage.setItem("token", response.token);
+        window.sessionStorage.setItem("token", response.token);
         window.location.href = "index.html";
+        homepageEdit();
       })
       .catch((error) => {
-        alert("Erreur ! E-mail ou mot de passe incorrect");
+        document.getElementById("erreur-message").textContent =
+          "Erreur dans l’identifiant ou le mot de passe";
       });
   });
 }

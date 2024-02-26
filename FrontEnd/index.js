@@ -6,6 +6,7 @@ let categories = [];
 function init() {
   getWorks();
   getCategories();
+  getToken();
 }
 
 // Fonction pour récupérer les travaux/projets depuis l'API
@@ -148,5 +149,43 @@ function afficherProjetsDeLaCategorie(categoryId) {
     gallery.appendChild(figureElement);
   });
 }
+
+function getToken() {
+  //Récuperer et vérifier le token
+  const token = sessionStorage.getItem("token");
+
+  if (!token) {
+    //Erreur si le token n'est pas présent
+    console.log("Pas de token");
+  } else {
+    //Afficher la page mode édition si le token est présent
+    console.log(token);
+    homepageEdit();
+  }
+}
+
+function homepageEdit() {
+  //Récuperer les différents éléments du DOM
+  const modeEdition = document.querySelector(".edition-container");
+  const boutonModifier = document.querySelector(".bouton-modifier");
+  const boutonLogin = document.querySelector(".login-nav");
+  const boutonLogout = document.querySelector(".logout-nav");
+
+  const boutonCategories = document.querySelector(".bouton-container");
+
+  //Modifier les classes pour masquer les éléments
+  modeEdition.classList.toggle("hidden");
+  boutonModifier.classList.toggle("hidden");
+  boutonLogout.classList.toggle("hidden");
+  boutonLogin.classList.toggle("hidden");
+
+  boutonCategories.classList.toggle("visible");
+}
+
+const logout = document.querySelector(".logout-nav");
+
+logout.addEventListener("click", () => {
+  window.sessionStorage.removeItem("token");
+});
 
 init();

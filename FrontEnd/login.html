@@ -15,47 +15,48 @@
     <script type="module" src="login.js" defer></script>
   </head>
   <body>
-    <header>
-      <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-      <nav>
-        <ul>
-          <li><a href="/index.html">projets</a></li>
-          <li>contact</li>
-          <li><a href="/login.html">login</a></li>
-          <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
-        </ul>
-      </nav>
-    </header>
-    <main>
-      <div id="login">
-        <div id="error-message" style="color: red"></div>
+    <div class="main-container">
+      <header>
+        <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+        <nav>
+          <ul>
+            <li><a href="/index.html">projets</a></li>
+            <li>contact</li>
+            <li><a href="/login.html">login</a></li>
+            <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
+          </ul>
+        </nav>
+      </header>
+      <main>
+        <div id="login">
+          <h2 class="titre-login">Log In</h2>
+          <form class="formulaire-login" action="" method="post">
+            <div class="zone-input">
+              <label for="email">E-mail</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+            <div class="zone-input">
+              <label for="password">Mot de passe</label>
+              <input type="password" id="password" name="password" required />
+            </div>
+            <div id="erreur-message" style="color: red"></div>
+            <div>
+              <input type="submit" value="Se connecter" />
+            </div>
+            <div>
+              <a href="#">Mot de passe oublié</a>
+            </div>
+          </form>
+        </div>
+      </main>
 
-        <h2 class="titre-login">Log In</h2>
-        <form class="formulaire-login" action="" method="post">
-          <div class="zone-input">
-            <label for="email">E-mail</label>
-            <input type="email" id="email" name="email" required />
-          </div>
-          <div class="zone-input">
-            <label for="password">Mot de passe</label>
-            <input type="password" id="password" name="password" required />
-          </div>
-          <div>
-            <input type="submit" value="Se connecter" />
-          </div>
-          <div>
-            <a href="#">Mot de passe oublié</a>
-          </div>
-        </form>
-      </div>
-    </main>
-
-    <footer>
-      <nav>
-        <ul>
-          <li>Mentions Légales</li>
-        </ul>
-      </nav>
-    </footer>
+      <footer>
+        <nav>
+          <ul>
+            <li>Mentions Légales</li>
+          </ul>
+        </nav>
+      </footer>
+    </div>
   </body>
 </html>
