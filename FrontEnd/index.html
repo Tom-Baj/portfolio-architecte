@@ -17,10 +17,11 @@
       crossorigin="anonymous"
     ></script>
     <script type="module" src="index.js"></script>
+    <script type="module" src="modal.js"></script>
   </head>
   <body>
     <div class="edition-container hidden">
-      <i class="fa-regular fa-pen-to-square"></i>
+      <i class="fa-regular fa-pen-to-square icon-edition"></i>
       <p>Mode édition</p>
     </div>
     <div class="main-container">
@@ -29,7 +30,7 @@
         <nav>
           <ul>
             <li>projets</li>
-            <li>contact</li>
+            <li><a href="test.html">contact</a></li>
             <li class="login-nav"><a href="/login.html">login</a></li>
             <li class="logout-nav hidden"><a href="/index.html">logout</a></li>
             <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
@@ -66,10 +67,32 @@
 
             <button class="bouton-modifier hidden">
               <i class="fa-regular fa-pen-to-square icon-edition"></i>
-              <p>modifier</p>
+              <a id="modifier" class="js-modal" href="#modifier">modifier</a>
             </button>
+            <!-- Modal -->
+            <aside
+              class="modal"
+              id="modal-modifier"
+              aria-hidden="true"
+              role="dialog"
+              aria-labelledby="gallery-miniature"
+            >
+              <div class="modal-wrapper">
+                <button class="js-fermer-modal croix-fermer">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+                <h1 id="gallery-miniature">Galerie photo</h1>
+                <div class="gallery-miniature"></div>
+                <hr />
+                <input
+                  type="button"
+                  class="ajout-photo"
+                  value="Ajouter une photo"
+                />
+              </div>
+            </aside>
+            <!-- Fin modal -->
           </div>
-
           <div class="bouton-container"></div>
           <div class="gallery"></div>
         </section>

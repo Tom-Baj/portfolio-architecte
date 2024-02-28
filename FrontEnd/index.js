@@ -2,6 +2,13 @@
 let projets = [];
 let categories = [];
 
+//Récuperer les différents éléments du DOM
+const modeEdition = document.querySelector(".edition-container");
+const boutonModifier = document.querySelector(".bouton-modifier");
+const boutonLogin = document.querySelector(".login-nav");
+const boutonLogout = document.querySelector(".logout-nav");
+const boutonCategories = document.querySelector(".bouton-container");
+
 // Fonction d'initialisation
 function init() {
   getWorks();
@@ -165,14 +172,6 @@ function getToken() {
 }
 
 function homepageEdit() {
-  //Récuperer les différents éléments du DOM
-  const modeEdition = document.querySelector(".edition-container");
-  const boutonModifier = document.querySelector(".bouton-modifier");
-  const boutonLogin = document.querySelector(".login-nav");
-  const boutonLogout = document.querySelector(".logout-nav");
-
-  const boutonCategories = document.querySelector(".bouton-container");
-
   //Modifier les classes pour masquer les éléments
   modeEdition.classList.toggle("hidden");
   boutonModifier.classList.toggle("hidden");
@@ -182,9 +181,8 @@ function homepageEdit() {
   boutonCategories.classList.toggle("visible");
 }
 
-const logout = document.querySelector(".logout-nav");
-
-logout.addEventListener("click", () => {
+//Enlève le token au click sur logout
+boutonLogout.addEventListener("click", () => {
   window.sessionStorage.removeItem("token");
 });
 
