@@ -30,7 +30,6 @@ function userLogin() {
         console.log("Utilisateur connecté");
         window.sessionStorage.setItem("token", response.token);
         window.location.href = "index.html";
-        homepageEdit();
       })
       .catch((error) => {
         document.getElementById("erreur-message").textContent =

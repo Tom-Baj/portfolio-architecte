@@ -28,6 +28,7 @@ function creerMiniGallery() {
     const galleryMiniature = document.querySelector(".gallery-miniature");
     //Créer les blocs
     const blocElements = document.createElement("div");
+    blocElements.className = "bloc-elements";
     //Créer l'image et lui attribuer ces propriété
     const miniImgElement = document.createElement("img");
     miniImgElement.dataset.id = miniGallery[i].id;
@@ -38,30 +39,31 @@ function creerMiniGallery() {
     const blocPoubelle = document.createElement("div");
     blocPoubelle.className = "bloc-poubelle";
     //Créer le bouton poubelle et lui attribuer sa class
-    const poubelle = document.createElement("button");
+    const poubelle = document.createElement("span");
     poubelle.className = "fa-solid fa-trash-can poubelle";
     //Associer les éléments à leurs parents
-    galleryMiniature.appendChild(blocElements);
-    galleryMiniature.appendChild(miniImgElement);
+    blocElements.appendChild(miniImgElement);
     blocElements.appendChild(blocPoubelle);
     blocPoubelle.appendChild(poubelle);
+    galleryMiniature.appendChild(blocElements);
   }
 }
 
 const openModal = function (event) {
   event.preventDefault();
-  const target = document.querySelector(event.target.getAttribute("href"));
-  target.removeAttribute("aria-hidden");
+  const target = document.getElementById("modal-modifier");
+  target.classList.toggle("hidden");
   target.setAttribute("aria-modal", "true");
   modal = target;
-  modal.addEventListener("click", closeModal);
+  console.log(modal);
+  //modal.addEventListener("click", closeModal);
   modal.querySelector(".js-fermer-modal").addEventListener("click", closeModal);
 };
 
 const closeModal = function (event) {
   if (modal === null) return;
   event.preventDefault();
-  modal.style.display = "none";
+  modal.classList.toggle("hidden");
   modal.setAttribute("aria-hidden", "true");
   modal.removeAttribute("aria-modal");
   modal
@@ -73,5 +75,7 @@ const closeModal = function (event) {
 document.querySelectorAll(".js-modal").forEach((a) => {
   a.addEventListener("click", openModal);
 });
+
+function suprimerPhoto() {}
 
 afficherGalleryMiniature();

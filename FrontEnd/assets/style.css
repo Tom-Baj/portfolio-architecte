@@ -410,15 +410,6 @@ input[type="submit"] {
   margin-bottom: 2em;
 }
 
-/* Visibilité */
-.hidden {
-  display: none;
-}
-
-.visible {
-  visibility: hidden;
-}
-
 /* Gallerie miniature */
 .modal {
   position: fixed;
@@ -438,18 +429,16 @@ input[type="submit"] {
   border-radius: 10px;
   top: 660px;
   left: 405px;
-  display: flex;
-  width: 630px;
+  width: 430px;
+  height: 688px;
+
   max-width: calc(100vh - 20px);
   max-height: calc(100vh - 20px);
-  height: 688px;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   background-color: #fff;
+  padding: 20px 100px;
 }
 
-.modal-wrapper button {
+.modal-wrapper .croix-fermer {
   background-color: transparent;
   border: none;
   width: 24px;
@@ -465,23 +454,37 @@ input[type="submit"] {
   margin: 1em;
 }
 
+.modal-header {
+  text-align: end;
+}
+
+.modal-title {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
 .gallery-miniature {
   display: flex;
   flex-wrap: wrap;
-  width: 80%;
+  justify-content: space-between;
 }
 
-.croix-fermer {
+.gallery-miniature .bloc-elements img {
+  width: 100%;
 }
 
-.gallery-miniature img {
-  height: 102.57px;
-  margin: 15px 6px;
+.gallery-miniature .bloc-elements {
+  height: auto;
+  width: 19%;
+  margin-bottom: 25px;
+  position: relative;
 }
 
-hr {
-  width: 420px;
-  border: 1px solid #b3b3b3;
+.modal-footer {
+  padding: 30px;
+  margin-top: 40px;
+  text-align: center;
+  border-top: 1px solid #b3b3b3;
 }
 
 .ajout-photo {
@@ -503,8 +506,22 @@ hr {
   display: flex;
   align-content: center;
   justify-content: center;
+  top: 5px;
+  right: 5px;
+  padding: 1px;
 }
 
 .poubelle {
   color: #ffffff;
+  margin-top: 2px;
+  font-size: 12px;
+}
+
+/* Visibilité */
+.hidden {
+  display: none;
+}
+
+.visible {
+  visibility: hidden;
 }

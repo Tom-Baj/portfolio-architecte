@@ -71,24 +71,27 @@
             </button>
             <!-- Modal -->
             <aside
-              class="modal"
+              class="modal hidden"
               id="modal-modifier"
               aria-hidden="true"
               role="dialog"
               aria-labelledby="gallery-miniature"
             >
               <div class="modal-wrapper">
-                <button class="js-fermer-modal croix-fermer">
-                  <i class="fa-solid fa-xmark"></i>
-                </button>
-                <h1 id="gallery-miniature">Galerie photo</h1>
+                <div class="modal-header">
+                  <button class="js-fermer-modal croix-fermer">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+                <div class="modal-title">
+                  <h1 id="gallery-miniature">Galerie photo</h1>
+                </div>
                 <div class="gallery-miniature"></div>
-                <hr />
-                <input
-                  type="button"
-                  class="ajout-photo"
-                  value="Ajouter une photo"
-                />
+                <div class="modal-footer">
+                  <button type="button" class="ajout-photo">
+                    Ajouter une photo
+                  </button>
+                </div>
               </div>
             </aside>
             <!-- Fin modal -->
