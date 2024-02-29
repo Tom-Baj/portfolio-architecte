@@ -28,6 +28,7 @@ function getWorks() {
     .then((response) => {
       projets = response;
       afficherWorks();
+      creerMiniGallery();
     })
     .catch((error) => {
       // Gère les erreurs éventuelles
@@ -102,6 +103,33 @@ function afficherCategories() {
 
     categoriesEmplacement.appendChild(categorieBouton);
   });
+}
+
+export function creerMiniGallery() {
+  for (let i = 0; i < projets.length; i++) {
+    //Récuperer la gallery
+    const galleryMiniature = document.querySelector(".gallery-miniature");
+    //Créer les blocs
+    const blocElements = document.createElement("div");
+    blocElements.className = "bloc-elements";
+    //Créer l'image et lui attribuer ces propriété
+    const miniImgElement = document.createElement("img");
+    miniImgElement.dataset.id = projets[i].id;
+    miniImgElement.dataset.categoryId = projets[i].categoryId;
+    miniImgElement.dataset.userId = projets[i].userId;
+    miniImgElement.src = projets[i].imageUrl;
+    //Créer le bloc de la poubelle
+    const blocPoubelle = document.createElement("div");
+    blocPoubelle.className = "bloc-poubelle";
+    //Créer le bouton poubelle et lui attribuer sa class
+    const poubelle = document.createElement("span");
+    poubelle.className = "fa-solid fa-trash-can poubelle";
+    //Associer les éléments à leurs parents
+    blocElements.appendChild(miniImgElement);
+    blocElements.appendChild(blocPoubelle);
+    blocPoubelle.appendChild(poubelle);
+    galleryMiniature.appendChild(blocElements);
+  }
 }
 
 // Fonction pour créer et ajouter le bouton "Tous"
