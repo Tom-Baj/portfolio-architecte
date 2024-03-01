@@ -105,7 +105,7 @@ function afficherCategories() {
   });
 }
 
-export function creerMiniGallery() {
+function creerMiniGallery() {
   for (let i = 0; i < projets.length; i++) {
     //Récuperer la gallery
     const galleryMiniature = document.querySelector(".gallery-miniature");
@@ -129,6 +129,8 @@ export function creerMiniGallery() {
     blocElements.appendChild(blocPoubelle);
     blocPoubelle.appendChild(poubelle);
     galleryMiniature.appendChild(blocElements);
+
+    // Ajoute un écouteur d'événements à chaque bouton poubelle
   }
 }
 
