@@ -10,7 +10,7 @@ const boutonLogout = document.querySelector(".logout-nav");
 const boutonCategories = document.querySelector(".bouton-container");
 
 // Fonction d'initialisation
-function init() {
+export function init() {
   getWorks();
   getCategories();
   getToken();
@@ -62,7 +62,7 @@ function getCategories() {
 }
 
 // Fonction pour afficher les projets
-function afficherWorks() {
+export function afficherWorks() {
   const gallery = document.querySelector(".gallery");
 
   for (let i = 0; i < projets.length; i++) {
@@ -105,7 +105,7 @@ function afficherCategories() {
   });
 }
 
-function creerMiniGallery() {
+export function creerMiniGallery() {
   for (let i = 0; i < projets.length; i++) {
     //Récuperer la gallery
     const galleryMiniature = document.querySelector(".gallery-miniature");
@@ -129,8 +129,6 @@ function creerMiniGallery() {
     blocElements.appendChild(blocPoubelle);
     blocPoubelle.appendChild(poubelle);
     galleryMiniature.appendChild(blocElements);
-
-    // Ajoute un écouteur d'événements à chaque bouton poubelle
   }
 }
 

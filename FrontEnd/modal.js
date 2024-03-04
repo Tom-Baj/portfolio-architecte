@@ -1,73 +1,112 @@
+import {afficherWorks, creerMiniGallery} from './index.js';
+
+//Initialise la modal a null
 let modal = null;
 
-//Créer la fonction qui supprime le projet auprès de l'API
-function supprimerWork(id) {
+// Créer la fonction qui supprime le projet auprès de l'API
+function supprimerWork(id, callback) {
+  //Récupère le token dans le sesionStorage
+  const token = sessionStorage.getItem("token");
+  //Appel à l'API avec la method DELETE et envoi le token
   fetch(`http://localhost:5678/api/works/${id}`, {
-    //Spécifie la method d'utilisation de l'API "DELETE"
     method: "DELETE",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+    }
   })
-    .then((response) => {
-      //Vérifie si la requête fonctionne ou pas
-      if (!response.ok) {
-        throw new Error("La suppression à échoué");
-      }
-      //Traite la réponse en json
-      return response.json();
-    })
-    //Affiche la réponse
-    .then((response) => {
-      console.log("Projet supprimé", response);
-    })
-    .catch((error) => {
-      console.log("Erreur", error);
-    });
+  //Vérifie si la réponse est ok ou pas
+  .then(response => {
+    if (!response.ok) {
+      throw new Error("La suppression a échoué");
+    }
+    console.log("Projet supprimé avec succès");
+    // Passe l'ID du projet supprimé au callback
+    callback(id); 
+  })
+  //Retourne une erreur si la requête n'a pas fonctionnée
+  .catch(error => console.error("Erreur lors de la suppression:", error));
 }
 
+//Fonction de la gestion du click sur la poubelle
+function clickPoubelle() {
+  //Récupère les boutons poubelle et ajoute un évènement click sur chacune
+  const boutonsPoubelle = document.querySelectorAll(".poubelle");
+  boutonsPoubelle.forEach((bouton) => {
+    bouton.addEventListener("click", (event) => {
+      //Empeche le rechargement par default du navigateur
+      event.preventDefault();
+      //Récupère les objets du DOM
+      const elementProjet = bouton.closest('.bloc-elements');
+      const projectId = elementProjet.querySelector('img').dataset.id;
+
+      // Passer une fonction callback pour gérer la suppression visuelle
+      supprimerWork(projectId, (idSupprime) => {
+        // Supprime visuellement l'élément projet de la mini galerie
+        elementProjet.remove();
+
+        // Supprime également l'élément correspondant dans la galerie principale
+        const elementDansGaleriePrincipale = document.querySelector(`.gallery figure[data-id="${idSupprime}"]`);
+        if (elementDansGaleriePrincipale) {
+          elementDansGaleriePrincipale.remove();
+        }
+      });
+    });
+  });
+}
+
+
+
+//function qui ouvre la modal
 function openModal(event) {
+  //Évite le rechargement de la page
   event.preventDefault();
+  //Récupère la modal et modifie les propriétés
   const target = document.getElementById("modal-modifier");
   target.classList.toggle("hidden");
   target.setAttribute("aria-modal", "true");
   modal = target;
-  //modal.addEventListener("click", closeModal);
+  //Ferme la modal au click
+  modal.addEventListener("click", closeModal);
+  //Retire les écouteurs d'évènements
   modal.querySelector(".js-fermer-modal").addEventListener("click", closeModal);
-
+  modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
+  //Appel la fonction du click sur les poubelles
   clickPoubelle();
 }
 
+//Fonction qui ferme la modal
 function closeModal(event) {
+  //Vérifie si la modal est affiché
   if (modal === null) return;
+  // Évite le rechargement par défault
   event.preventDefault();
+  //Modifie les proprité des elements
   modal.classList.toggle("hidden");
   modal.setAttribute("aria-hidden", "true");
   modal.removeAttribute("aria-modal");
+  //Retire le bouton de fermeture
   modal
     .querySelector(".js-fermer-modal")
     .removeEventListener("click", closeModal);
+  modal.querySelector(".js-stop-modal").removeEventListener("click", stopPropagation);
+  //Réinitialise la modal a null
   modal = null;
 }
 
-document.querySelectorAll(".js-modal").forEach((a) => {
-  a.addEventListener("click", openModal);
-});
+//Permet de stopper la propagation du click pour fermer uniquement en dehors de la modal
+function stopPropagation(event) {
+  event.stopPropagation();
+};
 
-function clickPoubelle() {
-  //Récuperer les span poubelle
-  const boutonsPoubelle = document.querySelectorAll(".poubelle");
-  //Iterer à travers les span
-  boutonsPoubelle.forEach((boutonPoubelle) => {
-    //Ajout du click sur les span
-    boutonPoubelle.addEventListener("click", (event) => {
-      //Récuperer sur quel bouton a eu lieu le click
-      const clickedElement =
-        event.target.parentNode.parentNode.firstChild.getAttribute("data-id");
-      console.log(clickedElement);
-
-      supprimerWork(clickedElement);
-      event.preventDefault();
-      const supprimerBloc = document.parentNode.querySelector("div");
-      console.log(supprimerBloc);
-      clickedElement.parentNode.removeAttribute("div");
-    });
-  });
+//Écoute le cique pour ouvrir la modal
+const boutonModal = document.querySelector(".js-modal");
+if (boutonModal) {
+  boutonModal.addEventListener("click", openModal);
 }
+
+//Écoute la touche echap du clavier et ferme la modal
+window.addEventListener("keydown", function(event) {
+  if (event.key === "Escape" || event.key === "Esc") {
+    closeModal(event);
+  }
+});
