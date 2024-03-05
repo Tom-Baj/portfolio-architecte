@@ -346,7 +346,7 @@ footer nav ul {
   margin-bottom: 300px;
 }
 
-.zone-input {
+.zone-input-login {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -466,7 +466,7 @@ input[type="submit"] {
 .gallery-miniature {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  gap: 5px;
 }
 
 .gallery-miniature .bloc-elements img {
@@ -480,7 +480,8 @@ input[type="submit"] {
   position: relative;
 }
 
-.modal-footer {
+.modal-footer,
+.modal-ajout-footer {
   padding: 30px;
   margin-top: 40px;
   text-align: center;
@@ -515,6 +516,88 @@ input[type="submit"] {
   color: #ffffff;
   margin-top: 2px;
   font-size: 12px;
+}
+
+/* Modal ajout photo */
+/* Container ajout photo */
+.fleche-retour {
+  background-color: transparent;
+  border: none;
+}
+
+.zone-input-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  margin-bottom: 20px;
+}
+
+.container-ajout-photo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #e8f1f6;
+  border-radius: 3px;
+  text-align: center;
+}
+
+.icon-photo {
+  font-size: 76px;
+  color: #b9c5cc;
+  margin-top: 20px;
+}
+
+.zone-ajout-photo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.label-ajouter-photo {
+  border-radius: 50px;
+  background-color: #cbd6dc;
+  color: #306685;
+  padding: 10px;
+  width: 100%;
+  margin: 10px;
+}
+
+.format-photo {
+  font-size: 10px;
+  color: #444444;
+  margin-bottom: 20px;
+}
+
+.titre-input-modal {
+  margin-bottom: 10px;
+}
+
+.zone-choix {
+  width: 100%;
+  height: 50px;
+  font-size: 1.2em;
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+  background-color: transparent;
+}
+
+.bouton-valider:disabled {
+  background-color: #a7a7a7;
+}
+
+.bouton-valider {
+  padding: 5px;
+  border: none;
+  width: 70%;
+  margin-top: 1em;
+  border: none;
+  background-color: #1d6154;
+  color: #ffffff;
+  border-radius: 60px;
+  height: 36px;
 }
 
 /* Visibilité */

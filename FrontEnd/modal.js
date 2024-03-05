@@ -1,4 +1,4 @@
-import {afficherWorks, creerMiniGallery} from './index.js';
+import { afficherWorks, creerMiniGallery } from "./index.js";
 
 //Initialise la modal a null
 let modal = null;
@@ -11,20 +11,20 @@ function supprimerWork(id, callback) {
   fetch(`http://localhost:5678/api/works/${id}`, {
     method: "DELETE",
     headers: {
-      "Authorization": `Bearer ${token}`,
-    }
+      Authorization: `Bearer ${token}`,
+    },
   })
-  //Vérifie si la réponse est ok ou pas
-  .then(response => {
-    if (!response.ok) {
-      throw new Error("La suppression a échoué");
-    }
-    console.log("Projet supprimé avec succès");
-    // Passe l'ID du projet supprimé au callback
-    callback(id); 
-  })
-  //Retourne une erreur si la requête n'a pas fonctionnée
-  .catch(error => console.error("Erreur lors de la suppression:", error));
+    //Vérifie si la réponse est ok ou pas
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("La suppression a échoué");
+      }
+      console.log("Projet supprimé avec succès");
+      // Passe l'ID du projet supprimé au callback
+      callback(id);
+    })
+    //Retourne une erreur si la requête n'a pas fonctionnée
+    .catch((error) => console.error("Erreur lors de la suppression:", error));
 }
 
 //Fonction de la gestion du click sur la poubelle
@@ -36,8 +36,8 @@ function clickPoubelle() {
       //Empeche le rechargement par default du navigateur
       event.preventDefault();
       //Récupère les objets du DOM
-      const elementProjet = bouton.closest('.bloc-elements');
-      const projectId = elementProjet.querySelector('img').dataset.id;
+      const elementProjet = bouton.closest(".bloc-elements");
+      const projectId = elementProjet.querySelector("img").dataset.id;
 
       // Passer une fonction callback pour gérer la suppression visuelle
       supprimerWork(projectId, (idSupprime) => {
@@ -45,7 +45,9 @@ function clickPoubelle() {
         elementProjet.remove();
 
         // Supprime également l'élément correspondant dans la galerie principale
-        const elementDansGaleriePrincipale = document.querySelector(`.gallery figure[data-id="${idSupprime}"]`);
+        const elementDansGaleriePrincipale = document.querySelector(
+          `.gallery figure[data-id="${idSupprime}"]`
+        );
         if (elementDansGaleriePrincipale) {
           elementDansGaleriePrincipale.remove();
         }
@@ -53,8 +55,6 @@ function clickPoubelle() {
     });
   });
 }
-
-
 
 //function qui ouvre la modal
 function openModal(event) {
@@ -69,7 +69,9 @@ function openModal(event) {
   modal.addEventListener("click", closeModal);
   //Retire les écouteurs d'évènements
   modal.querySelector(".js-fermer-modal").addEventListener("click", closeModal);
-  modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
+  modal
+    .querySelector(".js-modal-stop")
+    .addEventListener("click", stopPropagation);
   //Appel la fonction du click sur les poubelles
   clickPoubelle();
 }
@@ -88,15 +90,23 @@ function closeModal(event) {
   modal
     .querySelector(".js-fermer-modal")
     .removeEventListener("click", closeModal);
-  modal.querySelector(".js-stop-modal").removeEventListener("click", stopPropagation);
-  //Réinitialise la modal a null
+  if (modal) {
+    const closeButton = modal.querySelector(".js-fermer-modal"); // Remplacez ceci par votre sélecteur réel
+    if (closeButton) {
+      closeButton.addEventListener("click", closeModal);
+    } else {
+      console.error("Le bouton de fermeture n'a pas été trouvé dans la modal");
+    }
+  } else {
+    console.error("L'élément modal n'est pas défini");
+  }
   modal = null;
 }
 
 //Permet de stopper la propagation du click pour fermer uniquement en dehors de la modal
 function stopPropagation(event) {
   event.stopPropagation();
-};
+}
 
 //Écoute le cique pour ouvrir la modal
 const boutonModal = document.querySelector(".js-modal");
@@ -105,7 +115,7 @@ if (boutonModal) {
 }
 
 //Écoute la touche echap du clavier et ferme la modal
-window.addEventListener("keydown", function(event) {
+window.addEventListener("keydown", function (event) {
   if (event.key === "Escape" || event.key === "Esc") {
     closeModal(event);
   }
