@@ -1,4 +1,4 @@
-import { afficherWorks, creerMiniGallery } from "./index.js";
+import { viderLesChampsForm } from "./ajoutphoto.js";
 
 //Initialise la modal a null
 let modal = null;
@@ -28,7 +28,7 @@ function supprimerWork(id, callback) {
 }
 
 //Fonction de la gestion du click sur la poubelle
-function clickPoubelle() {
+export function clickPoubelle() {
   //Récupère les boutons poubelle et ajoute un évènement click sur chacune
   const boutonsPoubelle = document.querySelectorAll(".poubelle");
   boutonsPoubelle.forEach((bouton) => {
@@ -101,6 +101,7 @@ function closeModal(event) {
     console.error("L'élément modal n'est pas défini");
   }
   modal = null;
+  viderLesChampsForm();
 }
 
 //Permet de stopper la propagation du click pour fermer uniquement en dehors de la modal

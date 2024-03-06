@@ -1,8 +1,13 @@
+import { init } from "./index.js";
+import { clickPoubelle } from "./modal.js";
+
 //RÉcupère les éléments du DOM
 //Récupère le titre de la modal
 const titreGalleryMiniature = document.getElementById("gallery-miniature");
 //Récupère les photos de la modal
 const photoGalleryMiniature = document.querySelector(".gallery-miniature");
+//Récupereer gallery
+const gallery = document.querySelector(".gallery");
 //Récupère le bouton ajout photo de la modal
 const boutonAjoutPhoto = document.querySelector(".ajout-photo");
 //Récupère l'icon de la fleche
@@ -75,6 +80,7 @@ function clickRetour() {
     modalFooter.classList.toggle("hidden");
     actualiserModal();
     actualiserHeaderModal();
+    viderLesChampsForm();
   });
 }
 
@@ -88,20 +94,8 @@ function ajouterNouveauProjet() {
   form.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    /* const image = document.getElementById("image");
-  const titre = document.getElementById("title");
-  const category = document.getElementById("category"); */
-
     const formData = new FormData(form);
     formData.append("image", inputAjoutPhoto.files[0]);
-
-    /*
-  formData.append("id", 0);
-  formData.append("title", titre.value);
-  formData.append("imageURL", image.files[0]);
-  formData.append("categoryId", category.value);
-  formData.append("userId", 0); 
-  */
 
     fetch("http://localhost:5678/api/works", {
       method: "POST",
@@ -121,6 +115,7 @@ function ajouterNouveauProjet() {
       .then((response) => {
         console.log(response);
         console.log("Projet ajouté avec succès");
+        afficherProjetAjoute(response);
       })
       .catch((error) => {
         console.error(
@@ -135,11 +130,59 @@ function verifierChampsForm() {
   let tousRemplis = true;
   const inputs = form.querySelectorAll("input");
   inputs.forEach(function (input) {
-    if (!input.value) {
+    if (!input.value.trim()) {
       tousRemplis = false;
     }
   });
   boutonValider.disabled = !tousRemplis;
+}
+
+function afficherProjetAjoute(projet) {
+  //Créer et ajoute les propriétés de l'image de la gallery
+  const figureElement = document.createElement("figure");
+  figureElement.dataset.id = projet.id;
+  figureElement.dataset.categoryId = projet.categoryId;
+  figureElement.dataset.userId = projet.userId;
+  //Créer l'image
+  const imgElement = document.createElement("img");
+  imgElement.src = projet.imageUrl;
+  //Créer le titre
+  const figcaptionElement = document.createElement("figcaption");
+  figcaptionElement.innerText = projet.title;
+  //Ajoute les éléments les uns aux autres
+  figureElement.appendChild(imgElement);
+  figureElement.appendChild(figcaptionElement);
+  gallery.appendChild(figureElement);
+
+  //Création et ajout les propriétés de l'image miniature
+  const blocElements = document.createElement("div");
+  blocElements.classList.add("bloc-elements");
+  const miniImgElement = document.createElement("img");
+
+  miniImgElement.dataset.id = projet.id;
+  miniImgElement.dataset.categoryId = projet.categoryId;
+  miniImgElement.dataset.userId = projet.userId;
+  miniImgElement.src = projet.imageUrl;
+
+  const blocPoubelle = document.createElement("div");
+  blocPoubelle.classList.add("bloc-poubelle");
+
+  const poubelle = document.createElement("span");
+  poubelle.classList.add("fa-solid", "fa-trash-can", "poubelle");
+
+  blocElements.appendChild(miniImgElement);
+  blocElements.appendChild(blocPoubelle);
+  blocPoubelle.appendChild(poubelle);
+  photoGalleryMiniature.appendChild(blocElements);
+
+  clickPoubelle();
+}
+
+export function viderLesChampsForm() {
+  const inputs = form.querySelectorAll("input");
+  inputs.forEach(function (input) {
+    input.value = "";
+  });
 }
 
 document.querySelectorAll("#form input").forEach((input) => {
