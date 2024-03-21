@@ -390,10 +390,6 @@ input[type="submit"] {
 /* Mode édition */
 
 /* Bannière */
-.zone-bouton-modifier {
-  padding-top: 0.5em;
-}
-
 .edition-container {
   height: 59px;
   width: 100%;
@@ -524,11 +520,6 @@ input[type="submit"] {
 
 /* Modal ajout photo */
 /* Container ajout photo */
-.new-header {
-  display: flex;
-  justify-content: space-between;
-}
-
 .fleche-retour {
   background-color: transparent;
   border: none;

@@ -1,10 +1,12 @@
+import { openModal } from "./modal.js";
+
 // Tableaux vides pour stocker les projets et les catégories
-let projets = [];
+export let projets = [];
 let categories = [];
 
 //Récuperer les différents éléments du DOM
 const modeEdition = document.querySelector(".edition-container");
-const boutonModifier = document.querySelector(".bouton-modifier");
+//const boutonModifier = document.querySelector(".bouton-modifier");
 const boutonLogin = document.querySelector(".login-nav");
 const boutonLogout = document.querySelector(".logout-nav");
 const boutonCategories = document.querySelector(".bouton-container");
@@ -28,7 +30,6 @@ function getWorks() {
     .then((response) => {
       projets = response;
       afficherWorks();
-      creerMiniGallery();
     })
     .catch((error) => {
       // Gère les erreurs éventuelles
@@ -62,7 +63,7 @@ function getCategories() {
 }
 
 // Fonction pour afficher les projets
-export function afficherWorks() {
+function afficherWorks() {
   const gallery = document.querySelector(".gallery");
 
   for (let i = 0; i < projets.length; i++) {
@@ -106,9 +107,11 @@ function afficherCategories() {
 }
 
 export function creerMiniGallery() {
+  //Récuperer la gallery
+  const galleryMiniature = document.querySelector(".gallery-miniature");
+  //Nettoyer la gallery
+  galleryMiniature.innerHTML = "";
   for (let i = 0; i < projets.length; i++) {
-    //Récuperer la gallery
-    const galleryMiniature = document.querySelector(".gallery-miniature");
     //Créer les blocs
     const blocElements = document.createElement("div");
     blocElements.className = "bloc-elements";
@@ -189,12 +192,8 @@ function getToken() {
   //Récuperer et vérifier le token
   const token = sessionStorage.getItem("token");
 
-  if (!token) {
-    //Erreur si le token n'est pas présent
-    console.log("Pas de token");
-  } else {
+  if (token) {
     //Afficher la page mode édition si le token est présent
-    console.log(token);
     homepageEdit();
   }
 }
@@ -202,16 +201,52 @@ function getToken() {
 function homepageEdit() {
   //Modifier les classes pour masquer les éléments
   modeEdition.classList.toggle("hidden");
-  boutonModifier.classList.toggle("hidden");
-  boutonLogout.classList.toggle("hidden");
+  //boutonModifier.classList.toggle("hidden");
   boutonLogin.classList.toggle("hidden");
-
+  //Masquer les bouton des categories
   boutonCategories.classList.toggle("visible");
+  //Création du bouton modifier
+  const boutonModifier = document.createElement("button");
+  boutonModifier.classList.add("bouton-modifier");
+  //Créationn de l'icon du bouton
+  const iconModifier = document.createElement("i");
+  iconModifier.classList.add("fa-regular", "fa-pen-to-square", "icon-edition");
+  //Création du lien
+  const lienModifier = document.createElement("a");
+  lienModifier.href = "#";
+  lienModifier.id = "modifier";
+  lienModifier.classList.add("js-modal");
+  lienModifier.innerText = "modifier";
+  //Assemble le bouton
+  const zoneBoutonModifier = document.querySelector(".zone-bouton-modifier");
+  zoneBoutonModifier.appendChild(boutonModifier);
+  boutonModifier.appendChild(iconModifier);
+  boutonModifier.appendChild(lienModifier);
+  //Créer le logout
+  const logoutNav = document.createElement("li");
+  logoutNav.classList.add("logout-nav");
+  const lienLogout = document.createElement("a");
+  lienLogout.href = "/index.html";
+  lienLogout.textContent = "logout";
+  //Assemble et place le bouton logout
+  logoutNav.appendChild(lienLogout);
+  const listeNav = document.querySelector("ul");
+  listeNav.insertBefore(
+    logoutNav,
+    listeNav.children[listeNav.children.length - 2]
+  );
+  //Enlève le token au click sur logout
+  logoutNav.addEventListener("click", () => {
+    window.sessionStorage.removeItem("token");
+  });
+  //Click bouton pour ouvrir la modal
+  const boutonModal = document.querySelector(".js-modal");
+  boutonModal.addEventListener("click", openModal);
 }
 
-//Enlève le token au click sur logout
-boutonLogout.addEventListener("click", () => {
-  window.sessionStorage.removeItem("token");
-});
+export function supprimer(id) {
+  let projetsBis = projets.filter((projets) => projets.id != id);
+  projets = projetsBis;
+}
 
 init();

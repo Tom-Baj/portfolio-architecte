@@ -18,7 +18,6 @@
     ></script>
     <script type="module" src="index.js"></script>
     <script type="module" src="modal.js"></script>
-    <script type="module" src="ajoutphoto.js"></script>
   </head>
   <body>
     <div class="edition-container hidden">
@@ -33,7 +32,6 @@
             <li>projets</li>
             <li>contact</li>
             <li class="login-nav"><a href="/login.html">login</a></li>
-            <li class="logout-nav hidden"><a href="/index.html">logout</a></li>
             <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
           </ul>
         </nav>
@@ -65,115 +63,9 @@
         <section id="portfolio">
           <div class="en-tete-portfolio">
             <h2>Mes Projets</h2>
-
-            <button class="bouton-modifier hidden">
-              <i class="fa-regular fa-pen-to-square icon-edition"></i>
-              <a id="modifier" class="js-modal" href="#modifier">modifier</a>
-            </button>
+            <div class="zone-bouton-modifier"></div>
             <!-- Modal -->
-            <aside
-              class="modal hidden"
-              id="modal-modifier"
-              aria-hidden="true"
-              role="dialog"
-              aria-labelledby="gallery-miniature"
-            >
-              <div class="modal-wrapper js-modal-stop">
-                <!-- Modal header -->
-                <div class="modal-header">
-                  <!-- Flèche retour -->
-                  <button
-                    type="button"
-                    class="fleche-retour js-modal-ajout hidden"
-                  >
-                    <i class="fa-solid fa-arrow-left"></i>
-                  </button>
-                  <button class="js-fermer-modal croix-fermer">
-                    <i class="fa-solid fa-xmark"></i>
-                  </button>
-                </div>
-                <!-- Modal title -->
-                <div class="modal-title">
-                  <h1 id="gallery-miniature">Galerie photo</h1>
-                  <h1 class="titre-ajout-photo js-modal-ajout hidden">
-                    Ajout photo
-                  </h1>
-                </div>
-                <!-- Modal form -->
-                <form id="form" class="js-modal-ajout form-modal-ajout hidden">
-                  <div class="zone-input-modal">
-                    <div class="container-ajout-photo">
-                      <div class="zone-ajout-photo">
-                        <i class="fa-regular fa-image icon-photo"></i>
 
-                        <!-- Input photo -->
-                        <label class="label-ajouter-photo" for="image"
-                          >+ Ajouter photo</label
-                        >
-                        <input
-                          class="input-ajout-photo hidden"
-                          type="file"
-                          id="image"
-                          name="image"
-                          accept=".jpg, .jpeg, .png"
-                          value="+ Ajouter photo"
-                          required
-                        />
-                        <p class="format-photo">jpg, png : 4mo max</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="zone-input-modal">
-                    <!-- Input titre -->
-                    <label class="titre-input-modal" for="title">Titre</label>
-                    <input
-                      class="zone-choix"
-                      type="text"
-                      id="title"
-                      name="title"
-                      required
-                    />
-                  </div>
-                  <div class="zone-input-modal">
-                    <label class="titre-input-modal" for="category"
-                      >Catégories</label
-                    >
-                    <!-- Input categories -->
-                    <select
-                      class="zone-choix"
-                      id="category"
-                      name="category"
-                      required
-                    >
-                      <option value=""></option>
-                      <option value="1">Object</option>
-                      <option value="2">Appartements</option>
-                      <option value="3">Hotels & restaurants</option>
-                    </select>
-                    <div class="modal-ajout-footer">
-                      <!-- Bouton valider -->
-                      <button
-                        id="bouton-valider-ajout"
-                        class="js-modal-ajout hidden bouton-valider"
-                        type="submit"
-                        disabled="disabled"
-                      >
-                        Valider
-                      </button>
-                    </div>
-                  </div>
-                </form>
-                <!-- Modal gallery -->
-                <div class="gallery-miniature"></div>
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                  <button type="button" class="ajout-photo">
-                    Ajouter une photo
-                  </button>
-                </div>
-              </div>
-            </aside>
             <!-- Fin modal -->
           </div>
           <div class="bouton-container"></div>
@@ -198,7 +90,17 @@
           </form>
         </section>
       </main>
+      <aside
+        class="modal hidden"
+        id="modal-modifier"
+        aria-hidden="true"
+        role="dialog"
+        aria-labelledby="gallery-miniature"
+      >
+        <div class="modal-wrapper js-modal-stop"></div>
 
+        <div></div>
+      </aside>
       <footer>
         <nav>
           <ul>
