@@ -28,7 +28,9 @@ function getWorks() {
       return response.json();
     })
     .then((response) => {
+      //Ajoute à la variable "projets" la réponse de l'API
       projets = response;
+      //Appel afficherWorks()
       afficherWorks();
     })
     .catch((error) => {

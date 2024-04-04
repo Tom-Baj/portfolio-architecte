@@ -27,7 +27,6 @@ function userLogin() {
         return response.json();
       })
       .then((response) => {
-        console.log("Utilisateur connecté");
         window.sessionStorage.setItem("token", response.token);
         window.location.href = "index.html";
       })

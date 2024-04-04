@@ -31,7 +31,6 @@ function supprimerWork(id, projetSupprimer) {
       if (!response.ok) {
         throw new Error("La suppression a échoué");
       }
-      console.log("Projet supprimé avec succès");
       // Passe l'ID du projet supprimé au callback
       projetSupprimer(id);
       supprimer(id);
@@ -63,8 +62,6 @@ function ajouterNouveauProjet(form, inputAjoutPhoto) {
       })
 
       .then((response) => {
-        console.log(response);
-        console.log("Projet ajouté avec succès");
         let categoryName = "";
         optionsCategories.forEach((option) => {
           if (option.value == form.category) {
@@ -423,7 +420,6 @@ function stopPropagation(event) {
 
 //Fonction qui affiche l'image
 function imageDisplay(event) {
-  console.log(event);
   const zoneAjoutPhoto = document.getElementById("zone-ajout-photo");
   while (zoneAjoutPhoto.firstChild) {
     zoneAjoutPhoto.removeChild(zoneAjoutPhoto.firstChild);
